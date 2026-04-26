@@ -758,6 +758,8 @@ python3 infra/teardown.py
 
 Removes all Lambda, API Gateway, Guardrail, WAF, CloudWatch, SNS, and IAM resources.
 
+![Teardown script output confirming all blog1 demo resources deleted](screenshots/15-cleanup.jpg)
+
 ---
 
 ## Key Takeaways
