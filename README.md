@@ -1,7 +1,9 @@
+# Blog-1 : Prompt Injection: Build, Attack, and Harden on AWS
+
+
 > OWASP Top 10 for LLMs on AWS Series - Blog 1 of 10
 > **AWS Services:** Bedrock, Lambda, API Gateway, WAF, CloudWatch
 
-# Blog-1 : Prompt Injection: Build, Attack, and Harden on AWS
 
 Prompt injection Attack occurs when an attacker supplies input that overrides the LLM's intended instructions.
 
