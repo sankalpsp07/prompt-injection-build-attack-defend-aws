@@ -1,0 +1,24 @@
+# Hashnode publish script — contains API tokens, not for public repo
+publish_hashnode.py
+
+# Runtime state — written by infra scripts, contain real AWS IDs/ARNs
+.api_endpoint
+.api_id
+.endpoint_url
+.guardrail_id
+.role_arn
+.sns_topic_arn
+.waf_acl_arn
+
+# Claude Code session data
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# macOS
+.DS_Store
