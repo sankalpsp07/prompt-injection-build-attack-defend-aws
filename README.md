@@ -32,12 +32,7 @@ The human user didn't type anything malicious in this attack. The attack was emb
 
 A typical AWS LLM pipeline looks like this:
 
-```
-User --> API Gateway --> Lambda --> Amazon Bedrock (LLM)
-                                         |
-                                  Downstream actions
-                             (S3, RDS, Agent tool calls)
-```
+![AWS LLM pipeline architecture](screenshots/aws-pipeline-diagram.png)
 
 Every hop is an injection surface:
 
@@ -80,6 +75,8 @@ When you do such implementation, the LLM sees the system instructions and the us
 Following is the architecture what we are trying to deploy in this blog.
 
 Here is the github repo where you can find the code: https://github.com/sankalpsp07/prompt-injection-build-attack-defend-aws
+
+![Infrastructure deployment architecture](screenshots/infra-architecture-diagram.png)
 
 ### Security Controls Applied
 
@@ -350,8 +347,6 @@ curl -s -X POST $CHATBOT_URL \
 ```
 
 Without controls the model refuses the Abc persona but still leaks `ACME2024` unprompted, while trying to be helpful it volunteers the secret it was told to protect. You don't need a perfect jailbreak; the model leaks data on its own when there is no structural boundary between instructions and input.
-
-![Attack B without controls — ACME2024 discount code leaked in response](screenshots/14-prompt%20injection%201%20-%20discount%20code%20disclosed%20.jpg)
 
 ![Attack B with controls — terminal showing blocked response](screenshots/12-attack2.jpg)
 
