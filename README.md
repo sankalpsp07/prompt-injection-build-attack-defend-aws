@@ -34,7 +34,7 @@ The human user didn't type anything malicious in this attack. The attack was emb
 
 A typical AWS LLM pipeline looks like this:
 
-![AWS LLM pipeline architecture](screenshots/aws-pipeline-diagram.png)
+[AWS LLM pipeline architecture](screenshots/aws-pipeline-diagram.png)
 
 Every hop is an injection surface:
 
@@ -78,7 +78,7 @@ Following is the architecture what we are trying to deploy in this blog.
 
 Here is the github repo where you can find the code: https://github.com/sankalpsp07/prompt-injection-build-attack-defend-aws
 
-![Infrastructure deployment architecture](screenshots/infra-architecture-diagram.png)
+[Infrastructure deployment architecture](screenshots/infra-architecture-diagram.png)
 
 ### Security Controls Applied
 
@@ -160,7 +160,7 @@ aws configure
 
 Now we will check if we have access to Amazon Bedrock Nova Micro model.
 
-![Bedrock model access page showing Amazon Nova Micro with Access granted status](screenshots/1-test%20access%20to%20nova%20micro%20model.jpg)
+[Bedrock model access page showing Amazon Nova Micro with Access granted status](screenshots/1-test%20access%20to%20nova%20micro%20model.jpg)
 
 ---
 
@@ -186,7 +186,7 @@ python3 infra/create_role.py
 
 The role ARN is saved to `.role_arn` and picked up automatically by the next scripts.
 
-![IAM role blog1-lambda-role created with AWSLambdaBasicExecutionRole and BedrockScopedAndCloudWatch inline policy](screenshots/2-create%20IAM%20Role.jpg)
+[IAM role blog1-lambda-role created with AWSLambdaBasicExecutionRole and BedrockScopedAndCloudWatch inline policy](screenshots/2-create%20IAM%20Role.jpg)
 
 ### Step 2 — Create the Bedrock Guardrail (`infra/create_guardrail.py`)
 
@@ -198,7 +198,7 @@ python3 infra/create_guardrail.py
 
 The guardrail ID is saved to `.guardrail_id` — the Lambda deploy step reads it automatically. No manual copy-paste needed.
 
-![Bedrock Guardrail blog1-injection-guard in READY status showing topic denial, PROMPT_ATTACK filter, and word blocklist](screenshots/3%20-%20deploy_guardrail.jpg)
+[Bedrock Guardrail blog1-injection-guard in READY status showing topic denial, PROMPT_ATTACK filter, and word blocklist](screenshots/3%20-%20deploy_guardrail.jpg)
 
 ### Step 3 — Deploy Lambda + API Gateway (`infra/deploy_lambda.py`)
 
@@ -208,7 +208,7 @@ Now in this step, it packages the Lambda handler, deploys it, creates a REST API
 python3 infra/deploy_lambda.py
 ```
 
-![Lambda function blog1-chatbot deployed with API Gateway REST API trigger](screenshots/4-deploy-lambda.jpg)
+[Lambda function blog1-chatbot deployed with API Gateway REST API trigger](screenshots/4-deploy-lambda.jpg)
 
 Now we will verify if endpoint is live or not by making a POST request to the endpoint:
 
@@ -218,7 +218,7 @@ curl -X POST "$(cat .endpoint_url)" \
   -d '{"message": "Hello, who are you?"}'
 ```
 
-![curl request to the deployed endpoint returning a valid chatbot response](screenshots/5-verify%20api%20endpoint%20with%20curl%20request%20.jpg)
+[curl request to the deployed endpoint returning a valid chatbot response](screenshots/5-verify%20api%20endpoint%20with%20curl%20request%20.jpg)
 
 ### Step 4 — Create and Attach WAF (`infra/create_waf.py`)
 
@@ -228,7 +228,7 @@ Creates a WAF WebACL with rate limiting and three AWS-managed rule sets, then as
 python3 infra/create_waf.py
 ```
 
-![AWS WAF console showing blog1-llm-waf WebACL with RateLimitPerIP, AWSManagedKnownBadInputs, AWSManagedCoreRuleSet, and AWSManagedAnonymousIPList rules associated with the API Gateway](screenshots/6-associate%20waf%20.jpg)
+[AWS WAF console showing blog1-llm-waf WebACL with RateLimitPerIP, AWSManagedKnownBadInputs, AWSManagedCoreRuleSet, and AWSManagedAnonymousIPList rules associated with the API Gateway](screenshots/6-associate%20waf%20.jpg)
 
 ### Step 5 — Set Up Monitoring (`infra/create_monitoring.py`)
 
@@ -238,7 +238,7 @@ Now it creates an SNS alert topic, four CloudWatch alarms, and a real-time secur
 python3 infra/create_monitoring.py
 ```
 
-![CloudWatch dashboard blog1-llm-security and SNS alarms created](screenshots/7-sns%20and%20cloudwatch%20alarms.jpg)
+[CloudWatch dashboard blog1-llm-security and SNS alarms created](screenshots/7-sns%20and%20cloudwatch%20alarms.jpg)
 
 Subscribe your email to get real-time security alerts:
 
@@ -252,15 +252,15 @@ aws sns subscribe \
 
 After running the command you'll see a confirmation pending status:
 
-![SNS subscription confirmation pending in AWS console](screenshots/8-confirmation-pending.jpg)
+[SNS subscription confirmation pending in AWS console](screenshots/8-confirmation-pending.jpg)
 
 AWS sends a confirmation email to the address you provided:
 
-![SNS subscription confirmation email in inbox](screenshots/9-email.jpg)
+[SNS subscription confirmation email in inbox](screenshots/9-email.jpg)
 
 Click the confirmation link in the email to activate alerts:
 
-![SNS subscription confirmed in browser](screenshots/10-confirmed%20on%20chrome.jpg)
+[SNS subscription confirmed in browser](screenshots/10-confirmed%20on%20chrome.jpg)
 
 All five steps above are chained in `deploy.sh` if you want to automate the deployment:
 
@@ -318,7 +318,7 @@ curl -s -X POST $CHATBOT_URL \
 
 Without controls the entire system prompt leaks including the secret discount code `ACME2024`.
 
-![Attack A with controls — terminal showing blocked response](screenshots/11-attack1-ignore%20system%20prompt%20.jpg)
+[Attack A with controls — terminal showing blocked response](screenshots/11-attack1-ignore%20system%20prompt%20.jpg)
 
 **Why it was blocked: Lambda pattern scan (Layer 2)**
 
@@ -350,7 +350,7 @@ curl -s -X POST $CHATBOT_URL \
 
 Without controls the model refuses the Abc persona but still leaks `ACME2024` unprompted, while trying to be helpful it volunteers the secret it was told to protect. You don't need a perfect jailbreak; the model leaks data on its own when there is no structural boundary between instructions and input.
 
-![Attack B with controls — terminal showing blocked response](screenshots/12-attack2.jpg)
+[Attack B with controls — terminal showing blocked response](screenshots/12-attack2.jpg)
 
 **Why it was blocked — Bedrock Guardrail word blocklist and topic denial (Layer 3)**
 
@@ -388,7 +388,7 @@ curl -s -X POST $CHATBOT_URL \
 
 Without controls it bypasses everything because the model is happy to play along with a fictional framing.
 
-![Attack C with controls — terminal showing blocked response](screenshots/13-attack3.jpg)
+[Attack C with controls — terminal showing blocked response](screenshots/13-attack3.jpg)
 
 **Why it was blocked — Bedrock PROMPT_ATTACK content filter (Layer 3)**
 
@@ -673,7 +673,7 @@ python3 infra/teardown.py
 
 This script will remove all the resources previously deployed, including Lambda, API Gateway, Guardrail, WAF, CloudWatch, SNS, and IAM roles.
 
-![Teardown script output confirming all blog1 demo resources deleted](screenshots/15-cleanup.jpg)
+[Teardown script output confirming all blog1 demo resources deleted](screenshots/15-cleanup.jpg)
 
 ---
 
