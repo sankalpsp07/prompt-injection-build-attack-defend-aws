@@ -1,22 +1,4 @@
 #!/bin/bash
-# ============================================================
-# BLOG 1 — STEP 5: System Prompt Extraction Attack
-# ============================================================
-# Demonstrates multiple techniques to extract the hidden
-# system prompt from the LLM — a recon step before a
-# deeper attack.
-#
-# Usage:
-#   # Deploy using modular Python scripts:
-#   #   python3 01_create_role.py
-#   #   python3 03_create_guardrail.py (optional)
-#   #   python3 02_deploy_lambda.py
-#   #   python3 04_create_waf.py
-#   #   python3 05_create_monitoring.py
-#   # Get your API endpoint from 02_deploy_lambda.py output or AWS Console
-#   export CHATBOT_URL="..."
-#   chmod +x attack_system_leak.sh && ./attack_system_leak.sh
-# ============================================================
 
 set -e
 

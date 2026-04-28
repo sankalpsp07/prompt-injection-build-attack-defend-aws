@@ -1,5 +1,9 @@
-# Hashnode publish script — contains API tokens, not for public repo
+# Utility scripts — local use only
 publish_hashnode.py
+upload_images_s3.py
+make_html.py
+builder_center_content.md
+builder_center_content.html
 
 # Runtime state — written by infra scripts, contain real AWS IDs/ARNs
 .api_endpoint
@@ -9,6 +13,8 @@ publish_hashnode.py
 .role_arn
 .sns_topic_arn
 .waf_acl_arn
+.cf_domain
+builder_center_content.txt
 
 # Claude Code session data
 .claude/

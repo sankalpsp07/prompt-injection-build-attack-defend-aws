@@ -1,24 +1,4 @@
 #!/bin/bash
-# ============================================================
-# BLOG 1 — STEP 3: Direct Prompt Injection Attack
-# ============================================================
-# Demonstrates three classic direct injection payloads.
-# Each one attempts a different goal:
-#   A) Extract the system prompt / secret data
-#   B) Override role identity
-#   C) Jailbreak via hypothetical framing
-#
-# Usage:
-#   # Deploy using modular Python scripts:
-#   #   python3 01_create_role.py
-#   #   python3 03_create_guardrail.py (optional)
-#   #   python3 02_deploy_lambda.py
-#   #   python3 04_create_waf.py
-#   #   python3 05_create_monitoring.py
-#   # Get your API endpoint from 02_deploy_lambda.py output or AWS Console
-#   export CHATBOT_URL="https://xxxx.execute-api.us-east-1.amazonaws.com/prod/chat"
-#   chmod +x attack_direct.sh && ./attack_direct.sh
-# ============================================================
 
 set -e
 
