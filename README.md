@@ -301,6 +301,14 @@ Now we will try to exploit:
 export CHATBOT_URL=$(cat .endpoint_url)
 ```
 
+> **Try it yourself** — the `attacks/` folder in the [GitHub repo](https://github.com/sankalpsp07/prompt-injection-build-attack-defend-aws) contains ready-to-run shell scripts for every attack below. Once your stack is deployed, just run:
+> ```bash
+> cd attacks
+> ./attack_direct.sh        # Attacks 1, 2, 3 — direct injection
+> ./attack_system_leak.sh   # Indirect injection via document content
+> ```
+> Each script fires the payload, prints the raw response, and shows whether the defences caught it.
+
 ### Attack 1: System Prompt Extraction
 
 **Request:**
